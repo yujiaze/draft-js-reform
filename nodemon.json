@@ -1,0 +1,6 @@
+{
+    "delay": "0",
+    "watch": [
+        "bin/www"
+    ]
+}

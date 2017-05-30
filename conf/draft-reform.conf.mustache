@@ -1,0 +1,38 @@
+{{!
+    server_list
+        host
+        port
+    domain
+    domain_internal
+    log_dir
+    upstream_name
+    res_deploy_dir
+}}
+
+upstream {{upstream_name}} {
+    {{#server_list}}
+    server {{host}}:{{port}};
+    {{/server_list}}
+}
+
+#{{{domain}}}
+server {
+    listen 80;
+    server_name {{{domain}}};
+    index index.html;
+    {{!rewrite ^/os/v1/(.*) /v1/$1 break;}}
+    access_log {{{log_dir}}}/draft-reform.log main;
+    error_log  {{{log_dir}}}/draft-reform-error.log notice;
+
+    location / {
+        proxy_pass http://{{upstream_name}};
+    }
+    
+    location /v1/ {
+        proxy_pass http://{{upstream_name}};
+    }
+
+    location /build/ {
+        root {{{res_deploy_dir}}};
+    }
+}

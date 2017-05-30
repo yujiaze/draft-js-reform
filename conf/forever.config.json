@@ -1,0 +1,7 @@
+{
+    "uid": "draft-reform",
+    "append": true,
+    "watch": false,
+    "script": "bin/www",
+    "root": "/opt/logs"
+}

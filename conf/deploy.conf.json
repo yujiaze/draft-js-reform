@@ -1,0 +1,27 @@
+{
+    "_common": {
+        "nginx_conf_dir": "/opt/conf/nginx/sites-avaliable/",
+        "nginx_link_dir": "/opt/conf/nginx/sites-enabled/",
+        "nginx_log_dir": "/opt/logs/nginx",
+        "log_path": "/opt/logs/draft-reform/",
+        "export": "export PATH=$PATH",
+        "n_proc": 2,
+        "port": 13001,
+        "deploy_dir": "/opt/web/draft-reform"
+    },
+    "test": {
+        "servers": [],
+        "name": "test",
+        "upstream_name": "draft_reform_test"
+    },
+    "pre": {
+        "servers": [],
+        "name": "draft",
+        "upstream_name": "draft_reform_pre"
+    },
+    "production": {
+        "servers": [],
+        "name": "draft",
+        "upstream_name": "draft_reform_production"
+    }
+}

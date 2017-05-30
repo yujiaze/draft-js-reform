@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        // "noImplicitAny": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "declaration": false,
+        "sourceMap": true,
+        "jsx": "preserve",
+        "experimentalDecorators": true,
+        "target": "ES6",
+        "noLib": false,
+        "allowJs": true,
+        "typeRoots" : ["typings/index.d.ts"]
+    },
+    "lib": [
+        "DOM",
+        "ES5",
+        "ES6"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
