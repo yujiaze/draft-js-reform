@@ -9,14 +9,16 @@ import ExtendedRichUtils from './ExtendedRichUtils'
 import BlockStyleControls from './Blocks/base'
 import InlineStyleControls from './InlineStyles/base'
 import TextAlignControl from './Blocks/textAlign'
-import ImageControl from './Entities/image'
+import ImageControl from './Entities/Image'
+import ColorControl from './InlineStyles/colors'
 import inlineStyleMap from './InlineStyles/override'
 import mediaBlockRenderer from './Entities/blockRendererFn'
+import compositeDecorator, { LinkControl } from './Decorators/composite'
 
 class RichEditor extends React.Component<any, any> {
     constructor(props) {
         super(props)
-        this.state = { editorState: EditorState.createEmpty() }
+        this.state = { editorState: EditorState.createEmpty(compositeDecorator) }
         this.focus = this.focus.bind(this)
         this.onChange = this.onChange.bind(this)
         this.handleKeyCommand = this.handleKeyCommand.bind(this)
@@ -87,6 +89,8 @@ class RichEditor extends React.Component<any, any> {
                     onToggle={this.toggleInlineStyle}
                 />
                 <ImageControl editorState={editorState} editorSetState={this.editorSetState} />
+                <LinkControl editorState={editorState} editorSetState={this.editorSetState} />
+                <ColorControl editorState={editorState} editorSetState={this.editorSetState} />
                 <div className={className} onClick={this.focus}>
                     <Editor
                         blockStyleFn={blockStyleFn}
@@ -102,7 +106,7 @@ class RichEditor extends React.Component<any, any> {
                     />
                 </div>
                 <textarea style={{ width: '500px', height: '200px', fontSize: '15px' }} value={toHTML(contentState)} />
-            </div>
+            </div >
         )
     }
 }

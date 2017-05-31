@@ -1,5 +1,5 @@
 import * as Draft from 'draft-js'
-import { Image } from './image'
+import { Image } from './Image'
 
 interface IAtomicCompRendererProps {
     contentState: Draft.ContentState,

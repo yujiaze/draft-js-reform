@@ -22,7 +22,7 @@ export default class ImageControl extends React.Component<IImageControlProps, II
     public render() {
         return (
             <span className="RichEditor-styleButton" onClick={this.showPrompt}>
-                上传图片
+                图片
                 {this.state.showPrompt && <input onChange={this.handleUploadFile} type="file" accept="image/jpeg;image/png;image/gif;" />}
             </span>
         )
