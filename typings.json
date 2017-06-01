@@ -1,8 +1,11 @@
 {
   "name": "draft-reform",
   "dependencies": {
+    "draft-js": "registry:dt/draft-js#0.10.0+20170311011332",
     "react": "registry:npm/react#15.0.1+20170104200836",
-    "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
-    "draft-js": "registry:dt/draft-js#0.10.0+20170311011332"
+    "react-dom": "registry:npm/react-dom#15.0.1+20160826174104"
+  },
+  "globalDependencies": {
+    "draft-js-export-html": "github:sstur/draft-js-export-html/typings/index.d.ts#68162e3b237019429f4aeb69bf3b3eafb13ba2eb"
   }
 }

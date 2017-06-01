@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/sstur/draft-js-export-html/68162e3b237019429f4aeb69bf3b3eafb13ba2eb/typings/index.d.ts",
+    "raw": "github:sstur/draft-js-export-html/typings/index.d.ts#68162e3b237019429f4aeb69bf3b3eafb13ba2eb",
+    "typings": "https://raw.githubusercontent.com/sstur/draft-js-export-html/68162e3b237019429f4aeb69bf3b3eafb13ba2eb/typings/index.d.ts"
+  }
+}

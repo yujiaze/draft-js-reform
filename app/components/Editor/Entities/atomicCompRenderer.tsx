@@ -11,7 +11,7 @@ export default function atomicCompRenderer(props: IAtomicCompRendererProps) {
         props.block.getEntityAt(0)
     )
     const { ENTITY_TYPE } = entity.getData()
-    console.log(entity.getData())
+    
     switch (ENTITY_TYPE) {
         case 'IMAGE':
             return <Image entity={entity} />
