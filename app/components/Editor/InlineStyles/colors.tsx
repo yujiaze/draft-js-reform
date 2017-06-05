@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import * as React from 'react'
 import { EditorState, Modifier, RichUtils } from 'draft-js'
 
 const COLORS = [
@@ -45,7 +45,7 @@ interface IColorControlState {
   showPropmt: boolean
 }
 
-export default class ColorControl extends Component<IColorControlProps, IColorControlState> {
+export default class ColorControl extends React.Component<IColorControlProps, IColorControlState> {
   constructor(props) {
     super(props)
     this.state = {

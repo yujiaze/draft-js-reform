@@ -5,8 +5,8 @@ const promisify = (url, type = 'GET', data = {}, ...args) => {
             type,
             data,
             args,
-            success(data) {
-                resolve(data)
+            success(response) {
+                resolve(response)
             },
             error(e) {
                 reject(e.responseText)
@@ -18,7 +18,7 @@ const promisify = (url, type = 'GET', data = {}, ...args) => {
 export { promisify }
 
 const api = {
-   
+
 }
 
 export default api

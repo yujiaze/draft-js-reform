@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { EditorState } from 'draft-js'
 import { StyleButton } from '../Blocks/base'
 

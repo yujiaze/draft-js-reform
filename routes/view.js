@@ -7,7 +7,7 @@ import authMdr from '../lib/middlewares/auth'
 // router.use(authMdr)
 
 router.get('*', function* (next) {
-    yield this.render('../views/main.pug', {
+    yield this.render('../build/main.pug', {
         user_info: JSON.stringify(this.state.user_info)
     })
 })

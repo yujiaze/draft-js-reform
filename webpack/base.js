@@ -1,10 +1,12 @@
-const webpack = require('webpack');
-const path = require('path');
-const ROOT_PATH = path.join(__dirname, '..');
-const BUILD_PATH = path.join(__dirname, '..', '/build');
-const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'dev';
+const webpack = require('webpack')
+const path = require('path')
+const fs = require('fs')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ROOT_PATH = path.join(__dirname, '..')
+const BUILD_PATH = path.join(__dirname, '..', '/build')
+const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'dev'
 
-require('shelljs/global');
+require('shelljs/global')
 
 module.exports = function (PUBLIC_PATH) {
     return [
@@ -17,7 +19,7 @@ module.exports = function (PUBLIC_PATH) {
             ],
             output: {
                 path: BUILD_PATH,
-                filename: "index.bundle.js",
+                filename: "[hash].bundle.js",
                 publicPath: PUBLIC_PATH
             },
             devtool: 'source-map',
@@ -80,7 +82,30 @@ module.exports = function (PUBLIC_PATH) {
                 new webpack.DllReferencePlugin({
                     context: __dirname,
                     manifest: require('../build/dll/vendor.manifest.json')
-                })
+                }),
+                //清除旧的bundle文件
+                new CleanWebpackPlugin(
+                    [
+                        '*.js',
+                        '*.js.map'
+                    ],
+                    {
+                        root: BUILD_PATH,
+                        verbose: true,
+                        dry: false,
+                        watch: false,
+                        exclude: ['files', 'to', 'ignore']
+                    }
+                ),
+                function () {
+                    this.plugin('done', (stats) => {
+                        console.log(stats.toJson(true).chunks)
+                        stats.toJson(true).chunks.filter(c => c.entry).forEach(c => {
+                            let fileContent = fs.readFileSync((path.join(ROOT_PATH, 'views/main.pug'))).toString('utf-8')
+                            fs.writeFileSync(path.join(BUILD_PATH, 'main.pug'), fileContent.replace('{{{__webpack_bundle__}}}', PUBLIC_PATH + c.files[0]))
+                        })
+                    })
+                }
             ]
         },
         {
@@ -113,5 +138,5 @@ module.exports = function (PUBLIC_PATH) {
                 ]
             }
         }
-    ];
+    ]
 }

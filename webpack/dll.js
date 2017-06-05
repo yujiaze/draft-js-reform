@@ -1,10 +1,30 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
+var isDev = process.env.NODE_ENV == 'dev' || !process.env.NODE_ENV
+
+var plugins = [
+    new webpack.DllPlugin({
+        context: __dirname,
+        path: path.resolve(__dirname, '../build/dll/[name].manifest.json'),
+        name: '[name]'
+    })
+]
+
+!isDev && plugins.push(
+    new webpack.optimize.UglifyJsPlugin(
+        {
+            compress: {
+                warnings: false
+            }
+        }
+    )
+)
 
 module.exports = {
     entry: {
         vendor: [
             'react',
+            'react-dom',
             'mobx-react',
             'mobx',
             'jquery'
@@ -19,7 +39,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                loader: process.env.NODE_ENV == "production" ? "strip-loader?strip[]=debug,strip[]=console.log" : "babel-loader"
+                loader: process.env.NODE_ENV == 'production' ? 'strip-loader?strip[]=debug,strip[]=console.log' : 'babel-loader'
             },
             // {
             //     test: /\.css$/,
@@ -34,17 +54,5 @@ module.exports = {
             // }
         ]
     },
-
-    plugins: [
-        new webpack.DllPlugin({
-            path: path.resolve(__dirname, '../build/dll/[name].manifest.json'),
-            name: "[name]"
-        }),
-        // new webpack.optimize.UglifyJsPlugin(
-        //     {
-        //         minimize: true,
-        //         output: {comments: false}
-        //     }
-        // ),
-    ]
-};
+    plugins: plugins
+}
