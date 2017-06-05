@@ -23,7 +23,10 @@ export default class ImageControl extends React.Component<IImageControlProps, II
         return (
             <span className="RichEditor-styleButton" onClick={this.showPrompt}>
                 图片
-                {this.state.showPrompt && <input onChange={this.handleUploadFile} type="file" accept="image/jpeg;image/png;image/gif;" />}
+                {
+                    this.state.showPrompt &&
+                    <input onChange={this.handleUploadFile} type="file" accept="image/jpeg;image/png;image/gif;" />
+                }
             </span>
         )
     }
@@ -36,7 +39,7 @@ export default class ImageControl extends React.Component<IImageControlProps, II
         this.setState({
             showPrompt: false
         })
-        let url = URL.createObjectURL((e.target as any).files[0])
+        const url = URL.createObjectURL((e.target as any).files[0])
         const { editorState, editorSetState } = this.props
         const contentState = editorState.getCurrentContent()
         const contentStateWithEntity = contentState.createEntity(

@@ -12,6 +12,7 @@ interface ILinkControlState {
 }
 
 export class LinkControl extends React.Component<ILinkControlProps, ILinkControlState> {
+    private input: HTMLInputElement
     constructor(props) {
         super(props)
         this.state = {
@@ -22,7 +23,28 @@ export class LinkControl extends React.Component<ILinkControlProps, ILinkControl
         this.confirmLink = this.confirmLink.bind(this)
         this.handleInputUrl = this.handleInputUrl.bind(this)
     }
-    promptForLink(e) {
+    public render() {
+        return (
+            <span className="RichEditor-styleButton" onClick={this.promptForLink}>
+                🔗
+               {
+                    this.state.showPrompt &&
+                    <div>
+                        <label>链接地址</label>
+                        <input
+                            type="text"
+                            // tslint:disable-next-line jsx-no-lambda
+                            ref={(input) => this.input = input}
+                            value={this.state.urlValue}
+                            onChange={this.handleInputUrl}
+                            onBlur={this.confirmLink}
+                        />
+                    </div>
+                }
+            </span>
+        )
+    }
+    private promptForLink(e) {
         const { editorState } = this.props
         e.preventDefault()
         const selection = editorState.getSelection()
@@ -43,11 +65,11 @@ export class LinkControl extends React.Component<ILinkControlProps, ILinkControl
                 showPrompt: true,
                 urlValue: url,
             }, () => {
-                setTimeout(() => (this.refs.url as HTMLInputElement).focus(), 0)
+                setTimeout(() => this.input.focus(), 0)
             })
         }
     }
-    confirmLink(e) {
+    private confirmLink(e) {
         e.preventDefault()
         const { editorState, editorSetState } = this.props
         const { urlValue } = this.state
@@ -69,33 +91,20 @@ export class LinkControl extends React.Component<ILinkControlProps, ILinkControl
             urlValue: '',
         })
     }
-    handleInputUrl(e) {
+    private handleInputUrl(e) {
         e.preventDefault()
         this.setState({
             ...this.state,
             urlValue: e.target.value,
         })
     }
-    _removeLink(e) {
+    private _removeLink(e) {
         e.preventDefault()
         const { editorState } = this.props
         const selection = editorState.getSelection()
         if (!selection.isCollapsed()) {
             this.props.editorSetState(RichUtils.toggleLink(editorState, selection, null))
         }
-    }
-    render() {
-        return (
-            <span className="RichEditor-styleButton" onClick={this.promptForLink}>
-                🔗
-               {
-                    this.state.showPrompt &&
-                    <div>
-                        <label>链接地址</label><input type="text" ref="url" value={this.state.urlValue} onChange={this.handleInputUrl} onBlur={this.confirmLink} />
-                    </div>
-                }
-            </span>
-        )
     }
 }
 
@@ -111,6 +120,7 @@ const findLinkEntities = (contentBlock: ContentBlock, callback, contentState): v
         callback
     )
 }
+
 const Link = (props) => {
     const { url } = props.contentState.getEntity(props.entityKey).getData()
     return (

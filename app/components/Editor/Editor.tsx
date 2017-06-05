@@ -16,7 +16,8 @@ import mediaBlockRenderer from './Entities/blockRendererFn'
 import compositeDecorator, { LinkControl } from './Decorators/composite'
 
 class RichEditor extends React.Component<any, any> {
-    constructor(props) {
+    private editor: Editor
+    public constructor(props) {
         super(props)
         this.state = { editorState: EditorState.createEmpty(compositeDecorator) }
         this.focus = this.focus.bind(this)
@@ -27,51 +28,16 @@ class RichEditor extends React.Component<any, any> {
         this.toggleInlineStyle = this.toggleInlineStyle.bind(this)
         this.editorSetState = this.editorSetState.bind(this)
     }
-    focus() {
-        (this.refs.editor as HTMLElement).focus()
-    }
-    onChange(editorState) {
+    public editorSetState(editorState: EditorState) {
         this.setState({ editorState })
     }
-    handleKeyCommand(command) {
-        const { editorState } = this.state
-        const newState = command == 'split-block' ? ExtendedRichUtils.splitBlock(editorState) : ExtendedRichUtils.handleKeyCommand(editorState, command)
-        if (newState) {
-            this.onChange(newState)
-            return 'handled'
-        }
-        return 'not-handled'
-    }
-    onTab(e) {
-        const maxDepth = 4
-        this.onChange(ExtendedRichUtils.onTab(e, this.state.editorState, maxDepth))
-    }
-    toggleBlockType(blockType) {
-        this.onChange(
-            ExtendedRichUtils.toggleBlockType(
-                this.state.editorState,
-                blockType
-            )
-        )
-    }
-    toggleInlineStyle(inlineStyle) {
-        this.onChange(
-            ExtendedRichUtils.toggleInlineStyle(
-                this.state.editorState,
-                inlineStyle
-            )
-        )
-    }
-    editorSetState(editorState: EditorState) {
-        this.setState({ editorState })
-    }
-    render() {
+    public render() {
         const { editorState } = this.state
 
         // If the user changes block type before entering any text, we can
         // either style the placeholder or hide it. Let's just hide it now.
         let className = 'RichEditor-editor'
-        var contentState = editorState.getCurrentContent()
+        const contentState = editorState.getCurrentContent()
         if (!contentState.hasText()) {
             if (contentState.getBlockMap().first().getType() !== 'unstyled') {
                 className += ' RichEditor-hidePlaceholder'
@@ -101,7 +67,8 @@ class RichEditor extends React.Component<any, any> {
                         onChange={this.onChange}
                         onTab={this.onTab}
                         placeholder="Tell a story..."
-                        ref="editor"
+                        // tslint:disable-next-line jsx-no-lambda
+                        ref={(editor) => this.editor = editor}
                         spellCheck={true}
                     />
                 </div>
@@ -109,8 +76,44 @@ class RichEditor extends React.Component<any, any> {
             </div >
         )
     }
+    private focus() {
+        this.editor.focus()
+    }
+    private onChange(editorState) {
+        this.setState({ editorState })
+    }
+    private handleKeyCommand(command) {
+        const { editorState } = this.state
+        const newState = command === 'split-block' ?
+            ExtendedRichUtils.splitBlock(editorState) :
+            ExtendedRichUtils.handleKeyCommand(editorState, command)
+        if (newState) {
+            this.onChange(newState)
+            return 'handled'
+        }
+        return 'not-handled'
+    }
+    private onTab(e) {
+        const maxDepth = 4
+        this.onChange(ExtendedRichUtils.onTab(e, this.state.editorState, maxDepth))
+    }
+    private toggleBlockType(blockType) {
+        this.onChange(
+            ExtendedRichUtils.toggleBlockType(
+                this.state.editorState,
+                blockType
+            )
+        )
+    }
+    private toggleInlineStyle(inlineStyle) {
+        this.onChange(
+            ExtendedRichUtils.toggleInlineStyle(
+                this.state.editorState,
+                inlineStyle
+            )
+        )
+    }
 }
-
 
 ReactDOM.render(
     <RichEditor />,

@@ -1,7 +1,7 @@
 import { stateToHTML, Options } from 'draft-js-export-html'
 import { COLOR_STYLE } from './InlineStyles/colors'
 
-let colorStyle = Object.keys(COLOR_STYLE).reduce(((prev, cur) => {
+const colorStyle = Object.keys(COLOR_STYLE).reduce(((prev, cur) => {
     prev[cur] = {
         style: {
             ...COLOR_STYLE[cur]
@@ -10,7 +10,7 @@ let colorStyle = Object.keys(COLOR_STYLE).reduce(((prev, cur) => {
     return prev
 }), {})
 
-let options: Options = {
+const options: Options = {
     inlineStyles: {
         // // Override default element (`strong`).
         // BOLD: { element: 'b' },
@@ -26,13 +26,13 @@ let options: Options = {
     },
     blockRenderers: {
         atomic: (block) => {
-            let data = block.getData()
+            const data = block.getData()
             if (data.get('foo') === 'bar') {
-                return `<div></div>`
+                return '<div></div>'
             }
         },
     },
-    entityStyleFn(entity) { //IMAGE ENTITY IS UNABLE/UNNECESSARY TO CUSTOMIZE
+    entityStyleFn(entity) { // IMAGE ENTITY IS UNABLE/UNNECESSARY TO CUSTOMIZE
         switch (entity.getType()) {
             default:
                 return {}

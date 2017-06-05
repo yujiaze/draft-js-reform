@@ -18,17 +18,18 @@ interface ITextAlignControlProps {
 export default class TextAlignControl extends React.Component<ITextAlignControlProps, null> {
     constructor(props) {
         super(props)
+        this.onToggle = this.onToggle.bind(this)
     }
-    render() {
-        const { editorState, editorSetState } = this.props
+    public render() {
+        const { editorState } = this.props
         const { currentBlock } = getCurrentlySelectedBlock(editorState)
         const blockTextAlign = currentBlock.getData().get(ALIGNMENT_DATA_KEY)
         return (
             <div className="RichEditor-controls">
-                {TEXT_ALIGN.map(type =>
+                {TEXT_ALIGN.map((type) =>
                     <StyleButton
                         key={type.label}
-                        onToggle={(style) => editorSetState(ExtendedRichUtils.toggleAlignment(editorState, style))}
+                        onToggle={this.onToggle}
                         active={type.style === blockTextAlign}
                         label={type.label}
                         style={type.style}
@@ -36,5 +37,8 @@ export default class TextAlignControl extends React.Component<ITextAlignControlP
                 )}
             </div>
         )
+    }
+    private onToggle(style) {
+        this.props.editorSetState(ExtendedRichUtils.toggleAlignment(this.props.editorState, style))
     }
 }

@@ -14,22 +14,18 @@ const BLOCK_TYPES = [
 ]
 
 interface IStyleButtonProps {
-    onToggle: Function,
+    onToggle: (param: any) => void,
     active: boolean,
     style: string
     label: string
 }
 
 export class StyleButton extends React.Component<IStyleButtonProps, null> {
-    constructor() {
+    public constructor() {
         super()
         this.onToggle = this.onToggle.bind(this)
     }
-    onToggle(e) {
-        e.preventDefault()
-        this.props.onToggle(this.props.style)
-    }
-    render() {
+    public render() {
         let className = 'RichEditor-styleButton'
         if (this.props.active) {
             className += ' RichEditor-activeButton'
@@ -40,8 +36,11 @@ export class StyleButton extends React.Component<IStyleButtonProps, null> {
             </span>
         )
     }
+    private onToggle(e) {
+        e.preventDefault()
+        this.props.onToggle(this.props.style)
+    }
 }
-
 
 const BlockStyleControls = (props) => {
     const { editorState } = props

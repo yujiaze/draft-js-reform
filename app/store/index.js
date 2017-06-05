@@ -1,2 +1,2 @@
-// export default 
-//     strict: process.env.NODE_ENV !== 'production',
+// export default
+// strict: process.env.NODE_ENV !== 'production',

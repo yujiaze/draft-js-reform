@@ -1,3 +1,3 @@
-let _globalUid = 0
+let globalUid = 0
 
-export default (prefix) => '__' + prefix + '__' + (++_globalUid)
+export default (prefix) => '__' + prefix + '__' + (++globalUid)

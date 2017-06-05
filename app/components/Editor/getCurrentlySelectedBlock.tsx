@@ -6,7 +6,7 @@ const getCurrentlySelectedBlock = (editorState: Draft.EditorState) => {
     const startKey = selection.getStartKey()
     let endKey = selection.getEndKey()
     const content = editorState.getCurrentContent()
-    let target = selection
+    const target = selection
 
     // Triple-click can lead to a selection that includes offset 0 of the
     // following block. The `SelectionState` for this case is accurate, but
@@ -31,7 +31,7 @@ const getCurrentlySelectedBlock = (editorState: Draft.EditorState) => {
     const hasAtomicBlock = content.getBlockMap()
         .skipWhile((_, k) => k !== startKey)
         .takeWhile((_, k) => k !== endKey)
-        .some(v => v.getType() === 'atomic')
+        .some((v) => v.getType() === 'atomic')
 
     const currentBlock = content.getBlockForKey(startKey)
 

@@ -1,6 +1,7 @@
 {
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-react"
     ],
     "rules": {
         "semicolon": [
@@ -10,10 +11,20 @@
         "quotemark": [
             true,
             "single",
-            "avoid-escape",
+            "jsx-double",
             "avoid-template"
         ],
+        "max-line-length": [
+            true,
+            150
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "jsx-no-multiline-js": false,
         "trailing-comma": false, //不检查逗号
+        "ordered-imports": false, //不按照字母顺序引入
         "object-literal-sort-keys": false //不按照字母顺序排列key
     },
     "jsRules": {

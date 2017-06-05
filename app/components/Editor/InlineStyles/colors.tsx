@@ -54,7 +54,21 @@ export default class ColorControl extends React.Component<IColorControlProps, IC
     this.toggleColor = this.toggleColor.bind(this)
     this.handleSelectColor = this.handleSelectColor.bind(this)
   }
-  toggleColor(toggledColor) {
+  public render() {
+    return (
+      <span className="RichEditor-styleButton" onClick={this.handleSelectColor}>
+        颜色
+        {
+          this.state.showPropmt &&
+          <div>
+            {/* tslint:disable-next-line jsx-no-lambda */}
+            {COLORS.map((c) => <button key={c.label} onClick={() => this.toggleColor(c.style)}>{c.label}</button>)}
+          </div>
+        }
+      </span>
+    )
+  }
+  private toggleColor(toggledColor) {
     const { editorState, editorSetState } = this.props
     const selection = editorState.getSelection()
 
@@ -93,22 +107,9 @@ export default class ColorControl extends React.Component<IColorControlProps, IC
 
     editorSetState(nextEditorState)
   }
-  handleSelectColor() {
+  private handleSelectColor() {
     this.setState({
       showPropmt: true
     })
-  }
-  render() {
-    return (
-      <span className="RichEditor-styleButton" onClick={this.handleSelectColor}>
-        颜色
-        {
-          this.state.showPropmt &&
-          <div>
-            {COLORS.map(c => <button key={c.label} onClick={() => this.toggleColor(c.style)}>{c.label}</button>)}
-          </div>
-        }
-      </span>
-    )
   }
 }

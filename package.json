@@ -8,7 +8,7 @@
     "build:dev": "webpack --config ./webpack/dev.js --watch",
     "build:dll": "webpack --config ./webpack/dll.js",
     "pre-commit:tips": "echo \"We use eslint for pre commit hook, \nif you're fixing some bugs in a hurry, use --no-verify to ignore this hook, otherwise you should fix these eslint errors\"",
-    "tslint": "tslint --config tslint.json app/*"
+    "tslint": "tslint --config tslint.json 'app/**/*.{js,ts,tsx}'"
   },
   "pre-commit": [
     "pre-commit:tips",
@@ -85,6 +85,7 @@
     "style-loader": "^0.16.1",
     "ts-loader": "^2.0.3",
     "tslint": "^5.4.2",
+    "tslint-react": "^3.0.0",
     "typescript": "^2.3.4",
     "underscore": "^1.8.3",
     "url-loader": "^0.5.8",

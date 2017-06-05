@@ -12,12 +12,12 @@ export const ALIGNMENTS = {
 export const ALIGNMENT_DATA_KEY = 'textAlign'
 
 interface IExtendedRichUtils {
-    toggleAlignment(editorState: EditorState, alignment: 'LEFT' | 'CENTER' | 'RIGHT'): EditorState,
-    splitBlock(editorState: EditorState): EditorState,
     onTab: typeof RichUtils.onTab,
     handleKeyCommand: typeof RichUtils.handleKeyCommand,
     toggleBlockType: typeof RichUtils.toggleBlockType,
-    toggleInlineStyle: typeof RichUtils.toggleInlineStyle
+    toggleInlineStyle: typeof RichUtils.toggleInlineStyle,
+    toggleAlignment(editorState: EditorState, alignment: 'LEFT' | 'CENTER' | 'RIGHT'): EditorState,
+    splitBlock(editorState: EditorState): EditorState
 }
 
 const ExtendedRichUtils: IExtendedRichUtils = Object.assign({}, RichUtils, {
@@ -43,11 +43,11 @@ const ExtendedRichUtils: IExtendedRichUtils = Object.assign({}, RichUtils, {
             'change-block-data'
         )
     },
-	/*
-	* An extension of the default split block functionality, originally pulled from
-	* https://github.com/facebook/draft-js/blob/master/src/component/handlers/edit/commands/keyCommandInsertNewline.js
-	*
-	* This version ensures that the text alignment is copied from the previously selected block.
+    /*
+	 * An extension of the default split block functionality, originally pulled from
+	 * https://github.com/facebook/draft-js/blob/master/src/component/handlers/edit/commands/keyCommandInsertNewline.js
+	 *
+	 * This version ensures that the text alignment is copied from the previously selected block.
 	*/
     splitBlock(editorState: EditorState): EditorState {
         // Original split logic

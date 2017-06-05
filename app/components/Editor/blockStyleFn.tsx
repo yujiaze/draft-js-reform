@@ -6,14 +6,14 @@ const blockStyleFn = (contentBlock) => {
             return 'RichEditor-blockquote'
         default:
     }
-    const textAlignStyle = contentBlock.getData().get(ALIGNMENT_DATA_KEY);
+    const textAlignStyle = contentBlock.getData().get(ALIGNMENT_DATA_KEY)
     switch (textAlignStyle) {
         case 'RIGHT':
-            return `text-align-right`
+            return 'text-align-right'
         case 'CENTER':
-            return `text-align-center`
+            return 'text-align-center'
         case 'LEFT':
-            return `text-align-left`
+            return 'text-align-left'
         default:
             return ''
     }
