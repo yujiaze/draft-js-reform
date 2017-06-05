@@ -4,11 +4,15 @@ import views from 'koa-views'
 import path from 'path'
 import router from './routes'
 import send from 'koa-send'
-import bodyParserMiddleware from 'koa-bodyparser'
+import bodyParser from 'koa-better-body'
 import proxyMdr from './lib/middlewares/proxy'
 import config from './conf/config'
+import logger from './lib/logger'
+import qs from 'qs'
 
 var app = new Koa()
+
+app.querystring = qs  // hack for koa-body-parsers 
 
 // Must be used before any router is used
 app.use(views(path.join(__dirname, '..', '/build'), {
@@ -22,6 +26,7 @@ app.use(function* (next) {
     try {
         yield next
     } catch (e) {
+        logger.error(e, Date())
         this.status = e.status || 500
         this.body = e.message
     }
@@ -35,8 +40,11 @@ app.use(function* (next) {
     yield next
 })
 
-app.use(bodyParserMiddleware({
-    formLimit: '1mb' //prevent payload too large 413
+app.use(bodyParser({
+    formLimit: "10240kb",
+    urlencodedLimit: "10240kb",
+    jsonLimit: "10240kb",
+    bufferLimit: "10240kb"
 }))
 
 app.use(router.routes())
