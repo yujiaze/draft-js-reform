@@ -24,8 +24,8 @@
         ],
         "jsx-no-multiline-js": false,
         "trailing-comma": false, //不检查逗号
-        "ordered-imports": false, //不按照字母顺序引入
-        "object-literal-sort-keys": false //不按照字母顺序排列key
+        "ordered-imports": false, //不按照字母顺序import
+        "object-literal-sort-keys": false //不按照字母顺序排列object key
     },
     "jsRules": {
         "semicolon": [
